@@ -26,3 +26,25 @@ DIÁRIO DO PROJETO
 
         Uso de inteligência artificial:
             Foi utilizada a ferramenta ChatGPT como apoio ao planejamento e à organização da documentação inicial do projeto. Todo o conteúdo gerado foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
+
+    - Encontro 2
+        Data: 30/09/2026
+
+        O que foi feito:
+            - Revisão e refinamento da documentação inicial.
+            - Definição e documentação do contrato inicial da API.
+            - Definição das principais rotas e operações da API.
+            - Identificação e documentação dos principais riscos.
+            - Documentação da organização do projeto.
+            - Criação da primeira versão do README.
+
+        Decisões tomadas:.
+            - O README inicial será mantido resumido e será atualizado conforme o desenvolvimento avançar.
+            - Os riscos do projeto serão acompanhados durante as próximas etapas e poderão ser atualizados conforme novos problemas forem identificados.
+
+        Testes realizados:
+            - Ainda não foram realizados.
+
+        Uso de inteligência artificial:
+            Foi utilizada a ferramenta ChatGPT como apoio à revisão, definição e organização. Todo o conteúdo gerado foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
+

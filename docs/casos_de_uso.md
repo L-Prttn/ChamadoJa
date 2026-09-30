@@ -1,4 +1,4 @@
-CASOS DE USO DO ChamadoJá
+CASOS DE USO do ChamadoJá
 
 - UC01 - Cadastrar usuário
     - Ator: Usuário/Atendente
