@@ -55,7 +55,7 @@ DECISÕES DO BANCO DE DADOS
         - Chamados por solicitante e categoria.
         - Comentários de um chamado.
         - Histórico de um chamado.
-    Os índices serão definidos no `docs/banco-de-dados/schema.sql`, considerando os filtros, relacionamentos e consultas descritos em `docs/banco-de-dados/consultas.sql`. A criação de índices adicionais deverá considerar sua utilidade para as consultas reais do projeto.
+    Os índices serão definidos no `database/schema.sql`, considerando os filtros, relacionamentos e consultas descritos em `database/consultas.sql`. A criação de índices adicionais deverá considerar sua utilidade para as consultas reais do projeto.
 
 11. Transações e consistência
     Operações que dependem da gravação de vários registros deverão utilizar transações quando necessário. Na abertura de um chamado, por exemplo, a criação do chamado e do histórico inicial deverá ser confirmada integralmente ou desfeita em caso de erro.
@@ -70,5 +70,5 @@ Caso a implementação armazene senhas, elas deverão ser armazenadas utilizando
     - `docs/casos-de-uso.md`: ações realizadas pelos usuários e atendentes.
     - `docs/contrato-api.md`: endpoints e formato das requisições e respostas.
     - `docs/modelo-er/modelo-er.md`: entidades, atributos e relacionamentos.
-    - `docs/banco-de-dados/consultas.sql`: consultas previstas para validar e utilizar o modelo.
-    O arquivo `docs/banco-de-dados/schema.sql` implementará a estrutura definida nesses documentos, respeitando as decisões registradas aqui.
+    - `database/consultas.sql`: consultas previstas para validar e utilizar o modelo.
+    O arquivo `database/schema.sql` implementará a estrutura definida nesses documentos, respeitando as decisões registradas aqui.
