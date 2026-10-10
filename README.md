@@ -29,6 +29,8 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
 - Riscos do projeto (docs/riscos.md)
 - Organização de desenvolvimento do projeto (docs/organizacao_projeto.md)
 - Diario de desenvolvimento (docs/diario.md)
+- Modelo Entidade-Relacionamento (docs/modelo-er)
+- Banco de dados (docs/banco-de-dados)
 
 5. Status
 - Em desenvolvimento: etapa de planejamento.
