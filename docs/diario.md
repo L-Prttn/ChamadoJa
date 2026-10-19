@@ -97,4 +97,41 @@ DIÁRIO DO PROJETO
             - Execução e validação das consultas documentadas em consultas.sql.
 
         - Uso de inteligência artificial:
-            Foi utilizada a ferramenta ChatGPT como apoio à elaboração, revisão e organização dos scripts SQL. Todo o conteúdo gerado foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
+            Foi utilizada a ferramenta ChatGPT como apoio à revisão e organização dos scripts SQL. Todo o conteúdo gerado foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
+
+03. Semana 03 — Base Laravel e persistência
+    - Encontro 1
+        Data: 18/10/2026
+
+        - O que foi feito:
+            - Inicialização da aplicação Laravel.
+            - Configuração do Composer e das dependências.
+            - Criação do arquivo '.env.example'.
+            - Configuração da conexão com PostgreSQL.
+            - Criação das migrations para usuários, categorias, chamados, comentários e histórico de status.
+            - Definição das chaves estrangeiras, restrições e índices.
+            - Criação da rota 'GET /api/saude'.
+
+        - Testes realizados:
+            - Execução de 'php artisan migrate'.
+            - Execução de 'php artisan migrate:fresh --seed'.
+            - Verificação da rota 'GET /api/saude'.
+            - Resposta obtida:
+              '{"dados":{"aplicacao":"ChamadoJá","status":"funcionando"}}'
+
+    - Encontro 2
+        Data: 18/10/2026
+
+        - O que foi feito:
+            - Criação dos models Eloquent.
+            - Configuração dos relacionamentos entre usuários, categorias, chamados, comentários e histórico.
+            - Criação dos seeders.
+            - Inserção de dados fictícios relacionados.
+            - Atualização das instruções de instalação no README.
+
+        - Testes realizados:
+            - Execução de 'php artisan migrate:fresh --seed'.
+            - Verificação da criação dos usuários, categorias, chamados, comentários e históricos.
+
+        - Uso de inteligência artificial:
+            Foi utilizada a ferramenta ChatGPT como apoio à revisão da base Laravel, das migrations, dos models, dos relacionamentos e dos seeders. Todo o conteúdo foi revisado e compreendido pelo desenvolvedor.
