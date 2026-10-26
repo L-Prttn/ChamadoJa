@@ -33,7 +33,8 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
     - Banco de dados (docs/banco-de-dados)
 
 5. Status
-    - Em desenvolvimento: etapa de planejamento.
+    - Em desenvolvimento:
+        API principal de usuários, categorias e chamados implementada.
 
 6. Instalação
     - Requisitos
