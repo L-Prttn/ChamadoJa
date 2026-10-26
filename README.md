@@ -67,5 +67,64 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
         - A rota de saúde pode ser testada em:
             http://127.0.0.1:8000/api/saude
 
+7. API — Semana 4
+    - Rotas implementadas:
+    | Método| Rota              | Objetivo              | Sucesso|
+    |       |                   |                       |       |
+    | GET   | /api/usuarios     | Listar usuários       | 200   |
+    | POST  | /api/usuarios     | Cadastrar usuário     | 201   |
+    | GET   | /api/categorias   | Listar categorias     | 200   |
+    | POST  | /api/categorias   | Cadastrar categoria   | 201   |
+    | GET   | /api/chamados     | Listar chamados       | 200   |
+    | POST  | /api/chamados     | Abrir chamado         | 201   |
+    | GET   | /api/chamados/{id}| Consultar chamado     | 200   |
+    | PATCH | /api/chamados/{id}| Atualizar chamado     | 200   |
+        As respostas de sucesso utilizam o envelope 'dados'.
+    - Exemplo de cadastro de usuário:
+        POST /api/usuarios
+        {
+            "nome": "Usuario Exemplo",
+            "email": "usuario@example.test",
+            "tipo": "usuario"
+        }
+        Resposta 201:
+        {
+            "dados": {
+                "id": 6,
+                "nome": "Usuario Exemplo",
+                "email": "usuario@example.test",
+                "tipo": "usuario",
+                "criado_em": "...",
+                "atualizado_em": "..."
+            }
+        }
+    - Exemplo de abertura de chamado:
+        POST /api/chamados
+        {
+            "solicitante_id": 1,
+            "categoria_id": 1,
+            "titulo": "Computador nao liga",
+            "descricao": "O computador nao apresenta sinais de energia.",
+            "prioridade": "alta"
+        }
+        Resposta 201:
+        {
+            "dados": {
+                "id": 6,
+                "titulo": "Computador nao liga",
+                "descricao": "O computador nao apresenta sinais de energia.",
+                "prioridade": "alta",
+                "status": "aberto",
+                "solicitante": {
+                    "id": 1,
+                    "nome": "Ana Souza"
+                },
+                "categoria": {
+                    "id": 1,
+                    "nome": "Hardware"
+                }
+            }
+        }
+    - Dados inválidos retornam 422 e registros inexistentes retornam 404.
 
 https://github.com/L-Prttn/ChamadoJa.git

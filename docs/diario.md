@@ -135,3 +135,59 @@ DIÁRIO DO PROJETO
 
         - Uso de inteligência artificial:
             Foi utilizada a ferramenta ChatGPT como apoio à revisão da base Laravel, das migrations, dos models, dos relacionamentos e dos seeders. Todo o conteúdo foi revisado e compreendido pelo desenvolvedor.
+
+04. Semana 04 — API principal de usuários, categorias e chamados
+    - Encontro 1
+        Data: 25/10/2026
+
+        - O que foi feito:
+            - Criação dos controllers, Form Requests e rotas de usuários, categorias e chamados.
+            - Implementação das validações de campos obrigatórios, unicidade, existência de registros, tamanhos e prioridades.
+            - Definição do status inicial 'aberto' no servidor.
+            - Organização dos controllers para utilizar Form Requests e models Eloquent.
+
+        - Decisões tomadas:
+            - As prioridades continuam sendo 'normal', 'alta' e 'urgente'.
+            - O status inicial do chamado será sempre 'aberto'.
+            - A atualização permitirá apenas categoria_id, titulo, descricao e prioridade.
+            - solicitante_id e status não poderão ser alterados pela rota PATCH.
+            - O cadastro de usuário não receberá senha nesta etapa.
+            - Filtros e paginação ficam para a próxima etapa.
+
+        - Testes realizados:
+            - Ainda não foram realizados neste encontro.
+
+        - Uso de inteligência artificial:
+            Foi utilizada a ferramenta Codex como apoio à definição das rotas, controllers, validações e organização do código. Todo o conteúdo foi revisado, aplicado e compreendido pelo desenvolvedor.
+
+    - Encontro 2
+        Data: 25/10/2026
+
+        - O que foi feito:
+            - Criação dos Resources de usuários, categorias e chamados.
+            - Padronização das respostas com o envelope 'dados'.
+            - Inclusão dos relacionamentos solicitante e categoria no Resource de chamados.
+            - Implementação de resposta JSON para recursos inexistentes.
+            - Correção do fuso horário da conexão PostgreSQL para UTC.
+            - Execução dos testes manuais dos endpoints.
+            - Atualização do contrato da API, README e diário.
+
+        - Decisões tomadas:
+            - Criações retornarão HTTP 201.
+            - Consultas e atualizações retornarão HTTP 200.
+            - Dados inválidos retornarão HTTP 422.
+            - Recursos inexistentes retornarão HTTP 404 com mensagem JSON.
+            - Comentários, alteração de status, histórico, filtros, paginação e resumo ficam para as próximas etapas.
+
+        - Testes realizados:
+            - Testes manuais dos endpoints com PowerShell.
+            - Cadastro válido de usuário e categoria: resposta 201.
+            - Email e nome de categoria repetidos: resposta 422.
+            - Abertura de chamado válida: resposta 201 com status 'aberto'.
+            - Consulta e atualização de chamado: resposta 200.
+            - Dados inválidos, solicitante inexistente e categoria inexistente: resposta 422.
+            - Chamado inexistente: resposta 404.
+            - Verificação da coerência dos timestamps após a correção do fuso horário.
+
+        - Uso de inteligência artificial:
+            Foi utilizada a ferramenta Codex como apoio à implementação, revisão, correção do fuso horário e organização da documentação. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
