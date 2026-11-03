@@ -5,7 +5,7 @@ A API será utilizada para abrir, consultar, atualizar e acompanhar chamados de 
 
 Situação atual:
 - Rotas de usuários, categorias e chamados implementadas na Semana 4.
-- Comentários, alteração de status, histórico, filtros, paginação e resumo estão previstos para as próximas etapas.
+- Comentários, alteração de status, histórico, filtros, paginação e resumo implementados na Semana 5.
 - A autenticação não é obrigatória nesta primeira versão.
 
 1. Usuários
@@ -138,12 +138,22 @@ Situação atual:
             Listar os chamados cadastrados.
 
         Entrada:
-            Nenhum parâmetro obrigatório nesta etapa.
+            Nenhum parâmetro obrigatório.
 
-        Parâmetros previstos para a próxima etapa:
-            status
-            prioridade
-            pagina
+        Parâmetros opcionais de consulta:
+            status: filtra pelo status informado;
+            prioridade: filtra pela prioridade informada;
+            categoria_id: filtra pela categoria;
+            solicitante_id: filtra pelo solicitante;
+            ordenar_por: criado_em, prioridade ou status (padrão: criado_em);
+            ordem: asc ou desc (padrão: desc);
+            por_pagina: quantidade de registros por página, de 1 a 100 (padrão: 15);
+            page: número da página.
+
+        Observações:
+            Os filtros podem ser combinados.
+            A ordenação por prioridade considera o peso urgente, alta e normal.
+            Campos de ordenação fora da lista permitida retornam HTTP 422.
 
         Resposta esperada:
             Lista de chamados.
@@ -170,6 +180,23 @@ Situação atual:
                         "atualizado_em": "2026-10-19T05:05:34.000000Z"
                     }
                 ]
+            }
+        
+        A listagem é paginada e inclui os blocos links e meta:
+            {
+                "dados": [ ... ],
+                "links": {
+                    "first": "...",
+                    "last": "...",
+                    "prev": null,
+                    "next": null
+                },
+                "meta": {
+                    "current_page": 1,
+                    "per_page": 15,
+                    "total": 3,
+                    "last_page": 1
+                }
             }
 
     - POST      /api/chamados
@@ -284,9 +311,42 @@ Situação atual:
         Em caso de chamado inexistente:
             Retornar código HTTP 404 com a mensagem de recurso não encontrado.
 
+    - GET       /api/chamados/{id}/comentarios
+        Situação:
+            Implementado na Semana 5.
+
+        Objetivo:
+            Listar os comentários de um chamado.
+
+        Entrada:
+            id do chamado na URL.
+
+        Resposta esperada:
+            Lista de comentários em ordem de criação.
+            Cada comentário apresenta id, conteudo, autor e criado_em.
+            O autor é apresentado com id e nome.
+
+        Exemplo de resposta:
+            {
+                "dados": [
+                    {
+                        "id": 1,
+                        "conteudo": "O problema comecou hoje pela manha.",
+                        "autor": {
+                            "id": 1,
+                            "nome": "Ana Souza"
+                        },
+                        "criado_em": "2026-10-26T03:08:27.000000Z"
+                    }
+                ]
+            }
+
+        Em caso de chamado inexistente:
+            Retornar código HTTP 404.
+    
     - POST      /api/chamados/{id}/comentarios
         Situação:
-            Previsto para a próxima etapa.
+            Implementado na Semana 5.
 
         Objetivo:
             Adicionar um comentário a um chamado.
@@ -301,39 +361,64 @@ Situação atual:
                 "conteudo": "Problema identificado e em analise."
             }
 
+        Validações:
+            usuario_id: obrigatório, inteiro e deve existir em usuarios;
+            conteudo: obrigatório, texto, máximo de 2000 caracteres;
+            espaços no início e no fim do conteúdo são removidos antes da validação.
+
         Resposta esperada:
-            Comentário cadastrado.
-            Comentário associado ao chamado correto.
+            Comentário cadastrado, associado ao chamado informado na URL.
+            Código HTTP 201.
+
+        Em caso de dados inválidos:
+            Retornar código HTTP 422.
+
+        Em caso de chamado inexistente:
+            Retornar código HTTP 404.
 
     - PATCH     /api/chamados/{id}/status
         Situação:
-            Previsto para a próxima etapa.
+            Implementado na Semana 5.
 
         Objetivo:
-            Alterar o status de um chamado.
+            Alterar o status de um chamado e registrar a alteração no histórico.
 
         Entrada:
             id do chamado na URL.
-            Novo status.
-
-        Exemplo:
             {
-                "status": "em_andamento"
+                "status": "em_andamento",
+                "usuario_id": 3
             }
 
-        Status permitidos:
-            aberto
-            em_andamento
-            resolvido
-            fechado
+        Validações:
+            status: obrigatório; valores permitidos: aberto, em_andamento, resolvido e fechado;
+            usuario_id: obrigatório, inteiro e deve existir em usuarios.
+
+        Transições permitidas:
+            aberto -> em_andamento
+            em_andamento -> resolvido
+            resolvido -> em_andamento ou fechado
+            fechado -> nenhuma
+
+        Regras:
+            O chamado deve existir.
+            O status atual e o novo status devem formar uma transição permitida.
+            A atualização do chamado e o registro do histórico ocorrem na mesma transação.
+            Se qualquer parte falhar, nada é gravado.
 
         Resposta esperada:
             Chamado com o novo status.
-            Registro da alteração no histórico.
+            Código HTTP 200.
+
+        Em caso de transição não permitida ou dados inválidos:
+            Retornar código HTTP 422 com mensagem e erros.
+
+        Em caso de chamado inexistente:
+            Retornar código HTTP 404.
 
     - GET       /api/chamados/{id}/historico
         Situação:
-            Previsto para a próxima etapa.
+            Implementado na Semana 5.
 
         Objetivo:
             Consultar o histórico de alterações de status de um chamado.
@@ -342,27 +427,101 @@ Situação atual:
             id do chamado na URL.
 
         Resposta esperada:
-            Lista das alterações registradas.
-            Status anterior.
-            Novo status.
-            Data da alteração.
-            Usuário responsável pela alteração.
+            Lista das alterações registradas, em ordem de criação.
+            Status anterior, novo status, usuário responsável e data da alteração.
+        
+        Exemplo de resposta:
+            {
+                "dados": [
+                    {
+                        "id": 1,
+                        "status_anterior": null,
+                        "status_novo": "aberto",
+                        "usuario": {
+                            "id": 1,
+                            "nome": "Ana Souza"
+                        },
+                        "criado_em": "2026-10-26T03:08:27.000000Z"
+                    },
+                    {
+                        "id": 7,
+                        "status_anterior": "aberto",
+                        "status_novo": "em_andamento",
+                        "usuario": {
+                            "id": 3,
+                            "nome": "Marina Atendimento"
+                        },
+                        "criado_em": "2026-11-03T00:39:05.000000Z"
+                    }
+                ]
+            }
+
+        Em caso de chamado inexistente:
+            Retornar código HTTP 404.
 
 4. Resumo dos chamados
 
-    - GET       /api/resumo
+    - GET       /api/relatorios/resumo-chamados
         Situação:
-            Previsto para uma etapa futura.
+            Implementado na Semana 5.
 
         Objetivo:
             Consultar um resumo dos chamados cadastrados.
 
+        Entrada:
+            Nenhum parâmetro obrigatório.
+
         Resposta esperada:
-            Quantidade de chamados por status.
+            Total geral de chamados.
+            Quantidade por status.
             Quantidade por prioridade.
             Quantidade por categoria.
 
-        *A estrutura definitiva do resumo poderá ser refinada durante o desenvolvimento.
+        Observações:
+            Os totais são calculados com consulta agregada no banco.
+            Os quatro status e as três prioridades são sempre retornados, mesmo com valor zero.
+            Apenas categorias com chamados aparecem na lista.
+
+        Exemplo de resposta:
+            {
+                "dados": {
+                    "total": 4,
+                    "por_status": {
+                        "aberto": 1,
+                        "em_andamento": 2,
+                        "resolvido": 1,
+                        "fechado": 0
+                    },
+                    "por_prioridade": {
+                        "normal": 2,
+                        "alta": 1,
+                        "urgente": 1
+                    },
+                    "por_categoria": [
+                        {
+                            "categoria": {
+                                "id": 3,
+                                "nome": "Acesso"
+                            },
+                            "total": 1
+                        },
+                        {
+                            "categoria": {
+                                "id": 1,
+                                "nome": "Hardware"
+                            },
+                            "total": 1
+                        },
+                        {
+                            "categoria": {
+                                "id": 2,
+                                "nome": "Software"
+                            },
+                            "total": 2
+                        }
+                    ]
+                }
+            }
 
 5. Regras gerais
 
@@ -378,6 +537,10 @@ Situação atual:
     - A API deve utilizar mensagens de erro claras.
     - A autenticação não é obrigatória nesta primeira versão.
     - O campo senha_hash nunca deve ser retornado nas respostas.
+    - A listagem de chamados é paginada, com 15 registros por página por padrão.
+    - A ordenação aceita apenas criado_em, prioridade e status.
+    - Transições de status inválidas retornam código HTTP 422.
+    - O histórico registra a abertura do chamado e cada alteração de status.
     - Prioridades:
         normal
         alta

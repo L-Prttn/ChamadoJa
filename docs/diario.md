@@ -191,3 +191,66 @@ DIÁRIO DO PROJETO
 
         - Uso de inteligência artificial:
             Foi utilizada a ferramenta Codex como apoio à implementação, revisão, correção do fuso horário e organização da documentação. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
+
+05. Semana 05 — Relacionamentos, regras de negócio e consultas integradas
+    - Encontro 1
+        Data: 02/11/2026
+
+        - O que foi feito:
+            - Implementação das rotas de comentários: listagem e cadastro.
+            - Criação do Form Request de comentário, com remoção de espaços antes da validação.
+            - Criação do Resource de comentário, expondo o autor de forma resumida.
+            - Criação da classe AlterarStatusDoChamado, com a regra de transição.
+            - Implementação da alteração de status com transação e registro no histórico.
+            - Registro da abertura do chamado no histórico, dentro da transação de criação.
+            - Implementação da consulta de histórico do chamado.
+
+        - Decisões tomadas:
+            - Os status continuam sendo aberto, em_andamento, resolvido e fechado.
+            - O enunciado usava em_atendimento como exemplo; foi mantido o padrão já adotado no banco e na documentação.
+            - Transições permitidas: aberto para em_andamento; em_andamento para resolvido; resolvido para em_andamento ou fechado; fechado para nenhum status.
+            - Transição não permitida retorna HTTP 422 com mensagem específica.
+            - O histórico registra o usuário responsável, informado em usuario_id.
+            - Todo chamado registra a abertura no histórico, com status_anterior nulo.
+
+        - Testes realizados:
+            - Listagem de comentários: resposta 200.
+            - Cadastro de comentário válido: resposta 201.
+            - Comentário com autor inexistente e com conteúdo vazio: resposta 422.
+            - Comentários de chamado inexistente: resposta 404.
+            - Transição aberto para fechado: resposta 422.
+            - Transição aberto para em_andamento: resposta 200, com registro no histórico.
+            - Status inexistente e usuário inexistente na alteração: resposta 422.
+            - Histórico de chamado inexistente: resposta 404.
+
+        - Uso de inteligência artificial:
+            Foi utilizada a ferramenta Codex como apoio na implementação dos comentários, da regra de transição, do histórico e dos testes manuais. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
+
+    - Encontro 2
+        Data: 02/11/2026
+
+        - O que foi feito:
+            - Implementação de filtros por status, prioridade, categoria e solicitante.
+            - Implementação de paginação com limite configurável por página.
+            - Implementação de ordenação com lista de campos permitidos.
+            - Ordenação por prioridade considerando o peso urgente, alta e normal.
+            - Criação do endpoint de resumo com totais por status, prioridade e categoria.
+            - Atualização do contrato da API, do README e deste diário.
+
+        - Decisões tomadas:
+            - Filtros por categoria_id e solicitante_id não validam existência; id inexistente retorna lista vazia.
+            - A ordenação aceita apenas criado_em, prioridade e status, com ordem asc ou desc.
+            - por_pagina tem valor padrão 15 e máximo 100.
+            - O resumo sempre retorna as quatro chaves de status e as três de prioridade, mesmo com valor zero.
+            - O resumo usa consultas agregadas no banco, sem contar registros em PHP.
+
+        - Testes realizados:
+            - Listagem paginada com dados, links e meta: resposta 200.
+            - Filtros individuais e combinados: resposta 200 com os registros esperados.
+            - Ordenação por prioridade: alta antes de normal.
+            - Paginação com por_pagina igual a 2: duas páginas e total 3.
+            - Campo de ordenação não permitido e status inválido: resposta 422.
+            - Resumo antes e depois de abrir um chamado: totais atualizados corretamente.
+
+        - Uso de inteligência artificial:
+            Foi utilizada a ferramenta Codex como apoio na implementação dos filtros, da paginação, da ordenação e do resumo agregado. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.

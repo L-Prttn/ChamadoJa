@@ -34,7 +34,8 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
 
 5. Status
     - Em desenvolvimento:
-        API principal de usuários, categorias e chamados implementada.
+        Semana 5 concluída: comentários, histórico de status, regras de
+        transição, filtros, paginação e resumo implementados.
 
 6. Instalação
     - Requisitos
@@ -128,4 +129,93 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
         }
     - Dados inválidos retornam 422 e registros inexistentes retornam 404.
 
-https://github.com/L-Prttn/ChamadoJa.git
+8. API — Semana 5
+    - Novas rotas:
+    | Método| Rota                            | Objetivo             | Sucesso|
+    |       |                                 |                      |        |
+    | GET   | /api/chamados/{id}/comentarios  | Listar comentários   | 200    |
+    | POST  | /api/chamados/{id}/comentarios  | Adicionar comentário | 201    |
+    | PATCH | /api/chamados/{id}/status       | Alterar status       | 200    |
+    | GET   | /api/chamados/{id}/historico    | Consultar histórico  | 200    |
+    | GET   | /api/relatorios/resumo-chamados | Consultar resumo     | 200    |
+    - Filtros, paginação e ordenação em GET /api/chamados:
+        Exemplos:
+            /api/chamados?status=aberto
+            /api/chamados?prioridade=alta&categoria_id=1
+            /api/chamados?solicitante_id=2&ordenar_por=prioridade&ordem=asc
+            /api/chamados?por_pagina=5&page=2
+        A resposta inclui os blocos dados, links e meta.
+    - Exemplo de comentário:
+        POST /api/chamados/1/comentarios
+        {
+            "usuario_id": 1,
+            "conteudo": "Problema identificado e em analise."
+        }
+        Resposta 201:
+        {
+            "dados": {
+                "id": 4,
+                "conteudo": "Problema identificado e em analise.",
+                "autor": {
+                    "id": 1,
+                    "nome": "Ana Souza"
+                },
+                "criado_em": "..."
+            }
+        }
+    - Exemplo de alteração de status:
+        PATCH /api/chamados/1/status
+        {
+            "status": "em_andamento",
+            "usuario_id": 3
+        }
+        Resposta 200: dados do chamado com o novo status.
+        Transição não permitida, resposta 422:
+        {
+            "message": "Transição de status não permitida.",
+            "errors": {
+                "status": ["Transição de status não permitida."]
+            }
+        }
+    - Exemplo de resumo:
+        GET /api/relatorios/resumo-chamados
+        Resposta 200:
+        {
+            "dados": {
+                "total": 4,
+                "por_status": {
+                    "aberto": 1,
+                    "em_andamento": 2,
+                    "resolvido": 1,
+                    "fechado": 0
+                },
+                "por_prioridade": {
+                    "normal": 2,
+                    "alta": 1,
+                    "urgente": 1
+                },
+                "por_categoria": [
+                    {
+                        "categoria": {
+                            "id": 3,
+                            "nome": "Acesso"
+                        },
+                        "total": 1
+                    },
+                    {
+                        "categoria": {
+                            "id": 1,
+                            "nome": "Hardware"
+                        },
+                        "total": 1
+                    },
+                    {
+                        "categoria": {
+                            "id": 2,
+                            "nome": "Software"
+                        },
+                        "total": 2
+                    }
+                ]
+            }
+        }
