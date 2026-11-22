@@ -31,11 +31,15 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
     - Diario de desenvolvimento (docs/diario.md)
     - Modelo Entidade-Relacionamento (docs/modelo-er)
     - Banco de dados (docs/banco-de-dados)
+    - Pesquisa sobre autenticação e segurança (docs/pesquisa-autenticacao.md)
 
 5. Status
     - Em desenvolvimento:
         Semana 5 concluída: comentários, histórico de status, regras de
         transição, filtros, paginação e resumo implementados.
+        Semana 6: pesquisa sobre autenticação e segurança registrada,
+        testes automatizados e respostas de erro padronizadas.
+        O Laravel Sanctum não foi implementado; permanece como extensão opcional.
 
 6. Instalação
     - Requisitos
@@ -68,6 +72,12 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
             php artisan serve
         - A rota de saúde pode ser testada em:
             http://127.0.0.1:8000/api/saude
+        - Testes automatizados
+            - Crie o banco 'chamadoja_test' no PostgreSQL.
+            - O phpunit.xml usa esse banco e reaproveita as credenciais do .env.
+            - Os testes apagam e recriam as tabelas desse banco. Não use o banco de desenvolvimento.
+            - Execute:
+                php artisan test
 
 7. API — Semana 4
     - Rotas implementadas:
@@ -172,8 +182,8 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
         Resposta 200: dados do chamado com o novo status.
         Transição não permitida, resposta 422:
         {
-            "message": "Transição de status não permitida.",
-            "errors": {
+            "mensagem": "Transição de status não permitida.",
+            "erros": {
                 "status": ["Transição de status não permitida."]
             }
         }

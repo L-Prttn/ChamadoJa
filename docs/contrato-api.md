@@ -6,6 +6,8 @@ A API será utilizada para abrir, consultar, atualizar e acompanhar chamados de 
 Situação atual:
 - Rotas de usuários, categorias e chamados implementadas na Semana 4.
 - Comentários, alteração de status, histórico, filtros, paginação e resumo implementados na Semana 5.
+- Testes automatizados e respostas de erro padronizadas implementados na Semana 6.
+- A implementação do Laravel Sanctum não foi realizada; permanece como extensão opcional.
 - A autenticação não é obrigatória nesta primeira versão.
 
 1. Usuários
@@ -272,7 +274,7 @@ Situação atual:
         Em caso de chamado inexistente:
             Retornar código HTTP 404 com a mensagem:
             {
-                "message": "Recurso nao encontrado."
+                "mensagem": "Recurso não encontrado."
             }
 
     - PATCH     /api/chamados/{id}
@@ -535,6 +537,19 @@ Situação atual:
     - Criações devem retornar código HTTP 201.
     - Consultas e atualizações devem retornar código HTTP 200.
     - A API deve utilizar mensagens de erro claras.
+    - As respostas de erro utilizam as chaves mensagem e erros.
+        Erro de validação (422):
+        {
+            "mensagem": "Transição de status não permitida.",
+            "erros": {
+                "status": ["Transição de status não permitida."]
+            }
+        }
+        Recurso inexistente (404):
+        {
+            "mensagem": "Recurso não encontrado."
+        }
+        Quando houver mais de um erro, a chave erros apresenta as mensagens por campo.
     - A autenticação não é obrigatória nesta primeira versão.
     - O campo senha_hash nunca deve ser retornado nas respostas.
     - A listagem de chamados é paginada, com 15 registros por página por padrão.

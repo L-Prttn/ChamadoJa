@@ -254,3 +254,54 @@ DIÁRIO DO PROJETO
 
         - Uso de inteligência artificial:
             Foi utilizada a ferramenta Codex como apoio na implementação dos filtros, da paginação, da ordenação e do resumo agregado. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
+
+06. Semana 06 — Autenticação, segurança e qualidade da API
+    - Encontro 1
+        Data: 09/11/2026
+
+        - O que foi feito:
+            - Pesquisa sobre autenticação, autorização, hash de senhas, tokens de acesso e Laravel Sanctum.
+            - Criação do arquivo docs/pesquisa-autenticacao.md.
+            - Levantamento dos dados que não devem ser expostos nas respostas da API.
+            - Análise dos riscos de manter todos os endpoints públicos.
+            - Proposta das funcionalidades que deverão ser protegidas em uma futura versão.
+
+        - Decisões tomadas:
+            - A autenticação continua fora do escopo obrigatório desta versão.
+            - A implementação do Laravel Sanctum permanece opcional e não foi iniciada.
+            - A proteção das rotas e a autorização por tipo de usuário ficam registradas como proposta para uma etapa futura.
+
+        - Testes realizados:
+            - Ainda não foram realizados neste encontro.
+
+        - Uso de inteligência artificial:
+            Foi utilizada a ferramenta Codex como apoio à pesquisa, à organização do documento e à análise dos riscos. Todo o conteúdo foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
+
+    - Encontro 2
+        Data: 11/11/2026
+
+        - O que foi feito:
+            - Configuração do ambiente de testes automatizados com PHPUnit e banco PostgreSQL separado (chamadoja_test).
+            - Criação de factories para usuario, categoria e chamado.
+            - Criação de testes de feature para usuarios, categorias, chamados e comentarios.
+            - Padronização das respostas de erro da API no formato mensagem e erros.
+            - Tratamento dos erros 401, 403, 404, 422 e 429 no bootstrap/app.php.
+            - Tradução das mensagens de validação para português em lang/pt_BR/validation.php.
+            - Definição de APP_LOCALE=pt_BR no .env, no .env.example e no phpunit.xml.
+            - Atualização do README e do contrato da API com o ambiente de testes e o formato dos erros.
+
+        - Decisões tomadas:
+            - Os testes automatizados usam o banco chamadoja_test no PostgreSQL, separado do banco de desenvolvimento.
+            - O banco de testes foi escolhido por causa das migrations com ALTER TABLE ... ADD CONSTRAINT, específicas do PostgreSQL.
+            - O envelope de erro permanece com as chaves mensagem e erros.
+            - As mensagens de validação serão exibidas em português, com os nomes dos campos traduzidos e acentuados.
+            - A tradução cobre as regras usadas pela API e as regras mais comuns, sem criar um arquivo completo de tradução.
+            - O Laravel Sanctum continua apenas pesquisado, sem implementação nesta etapa.
+
+        - Testes realizados:
+            - php -l nos arquivos PHP criados e alterados: sem erros de sintaxe.
+            - php artisan test: 17 testes e 79 asserções, todos aprovados.
+            - Verificação manual de validação com campo titulo vazio: mensagem "O campo título é obrigatório.".
+
+        - Uso de inteligência artificial:
+            Foi utilizada a ferramenta Codex como apoio na configuração dos testes, na criação das factories e dos testes de feature, na padronização dos erros e na tradução das mensagens de validação. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
