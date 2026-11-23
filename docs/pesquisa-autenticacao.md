@@ -2,6 +2,8 @@ PESQUISA SOBRE AUTENTICAÇÃO E SEGURANÇA
 
 Objetivo:
     Registrar os conceitos básicos de autenticação e segurança estudados na Semana 6 e indicar o que deverá ser protegido no ChamadoJá.
+    Este documento registra a pesquisa feita antes da implementação. A situação
+    final do projeto está resumida na seção 11.
 
 1. Autenticação e autorização
 
@@ -16,7 +18,9 @@ Objetivo:
     - Hash é uma transformação de mão única: permite verificar a senha, mas não recuperar o valor original. Não é criptografia, pois a criptografia é reversível com a chave.
     - O ideal é usar um algoritmo próprio para senhas, com salt e fator de custo. A OWASP recomenda Argon2id; bcrypt também é aceitável.
     - No Laravel: Hash::make gera o hash, Hash::check verifica a senha e Hash::needsRehash indica quando o hash deve ser atualizado.
-    - No ChamadoJá, a coluna usuarios.senha_hash já existe, mas o cadastro atual não recebe senha. O campo não aparece no UsuarioResource.
+    - No ChamadoJá, a coluna usuarios.senha_hash já existia, mas o cadastro ainda
+      não recebia senha na época desta pesquisa. O campo não aparece no
+      UsuarioResource. A implementação posterior está na seção 11.
 
 3. Token de acesso
 
@@ -74,7 +78,7 @@ Objetivo:
 
     A autenticação sozinha não resolve tudo. Também é necessário verificar o tipo do usuário e se ele é o dono do chamado.
 
-9. Decisão sobre o Sanctum
+9. Decisão inicial sobre o Sanctum (Semana 6)
 
     - A pesquisa é obrigatória; a implementação é opcional.
     - Recomendação: não implementar agora. Priorizar os testes automatizados e a padronização dos erros.
@@ -92,3 +96,20 @@ Objetivo:
     - OWASP — API5:2023 Broken Function Level Authorization: https://owasp.org/API-Security/editions/2023/en/0xa5-broken-function-level-authorization/
 
     Fontes acessadas em 09/11/2026.
+
+11. Situação final da implementação
+
+    - O Laravel Sanctum foi instalado como extensão opcional da Semana 6.
+    - O model Usuario passou a estender Authenticatable e a usar HasApiTokens.
+    - O provider de autenticação foi ajustado para App\Models\Usuario.
+    - O cadastro passou a exigir senha com no mínimo 8 caracteres e confirmação.
+    - A senha é armazenada em senha_hash e não aparece nas respostas.
+    - Foram criadas as rotas POST /api/login e POST /api/logout.
+    - Permanecem públicas GET /api/saude, POST /api/login e POST /api/usuarios.
+    - As demais rotas usam o middleware auth:sanctum.
+    - O login aceita até 5 tentativas por minuto por origem.
+    - O token é enviado no header Authorization: Bearer <token>.
+    - O logout revoga o token atual.
+    - Não foi implementada autorização por tipo de usuário nem vínculo automático
+      entre o token e o usuario_id enviado no corpo das requisições.
+    - A implementação possui testes de login, logout, senha incorreta e acesso sem token.

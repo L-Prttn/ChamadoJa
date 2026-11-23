@@ -1,5 +1,9 @@
 CASOS DE USO do ChamadoJá
 
+Observação: os atores indicam o uso esperado de cada funcionalidade. A API ainda
+não diferencia permissões por tipo de usuário; tecnicamente, qualquer usuário
+autenticado pode acessar as rotas protegidas.
+
 - UC01 - Cadastrar usuário
     - Ator: Usuário/Atendente
     - Objetivo: Cadastrar um novo usuário.
@@ -108,3 +112,25 @@ CASOS DE USO do ChamadoJá
     - os dados apresentados devem corresponder aos chamados cadastrados;
     - o resumo deve permitir identificar a quantidade de chamados;
     - os agrupamentos devem considerar os critérios definidos pela API.
+
+- UC11 - Autenticar usuário
+    - Ator: Usuário/Atendente
+    - Objetivo: Entrar na API com email e senha para obter um token de acesso.
+    - Resultado esperado: A API valida as credenciais e retorna um token.
+
+    Critérios de aceite:
+    - email e senha devem ser informados;
+    - as credenciais devem corresponder a um usuário cadastrado;
+    - credenciais inválidas devem retornar erro de autenticação;
+    - o token retornado deve permitir acesso às rotas protegidas;
+    - a senha não deve ser retornada na resposta.
+
+- UC12 - Encerrar sessão
+    - Ator: Usuário/Atendente
+    - Objetivo: Revogar o token utilizado na requisição.
+    - Resultado esperado: O token deixa de permitir acesso às rotas protegidas.
+
+    Critérios de aceite:
+    - a requisição deve estar autenticada;
+    - o token atual deve ser revogado;
+    - a API deve informar o resultado da operação.

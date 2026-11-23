@@ -1,335 +1,170 @@
 DIÁRIO DO PROJETO
 
 01. Semana 01 — Planejamento do projeto
-    - Encontro 1
-        Data: 28/09/2026
+    Encontros: 1 (28/09/2026) e 2 (30/09/2026)
 
-        - O que foi feito:
-            - Leitura e análise do briefing do projeto.
-            - Definição do objetivo do sistema.
-            - Identificação do problema.
-            - Identificação dos principais usuários.
-            - Definição inicial dos requisitos funcionais.
-            - Definição inicial dos requisitos não funcionais.
-            - Definição das regras iniciais de prioridade e status.
-            - Definição dos limites do escopo inicial.
-            - Identificação de dúvidas e hipóteses do projeto.
-            - Elaboração dos primeiros casos de uso.
+    - O que foi feito:
+        - Definição do objetivo, problema, público, requisitos iniciais, prioridades, status, escopo e casos de uso.
+        - Criação do contrato inicial da API, riscos, organização do projeto e primeira versão do README.
 
-        - Decisões tomadas:
-            - A primeira versão será desenvolvida como uma API, sem interface visual.
-            - A autenticação será feita posteriormente.
-            - As regras ainda não definidas serão tratadas como hipóteses e poderão ser refinadas conforme as próximas etapas forem liberadas.
+    - Decisões:
+        - A primeira versão será uma API, sem interface web ou aplicativo.
+        - A autenticação será tratada posteriormente.
+        - Regras ainda não definidas serão mantidas como hipóteses até nova decisão.
 
-        - Testes realizados:
-            - Ainda não foram realizados.
+    - Testes:
+        - Ainda não realizados nesta etapa.
 
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta ChatGPT como apoio ao planejamento e à organização da documentação inicial do projeto. Todo o conteúdo gerado foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
-
-    - Encontro 2
-        Data: 30/09/2026
-
-        - O que foi feito:
-            - Revisão e refinamento da documentação inicial.
-            - Definição e documentação do contrato inicial da API.
-            - Definição das principais rotas e operações da API.
-            - Identificação e documentação dos principais riscos.
-            - Documentação da organização do projeto.
-            - Criação da primeira versão do README.
-
-        - Decisões tomadas:
-            - O README inicial será mantido resumido e será atualizado conforme o desenvolvimento avançar.
-            - Os riscos do projeto serão acompanhados durante as próximas etapas e poderão ser atualizados conforme novos problemas forem identificados.
-
-        - Testes realizados:
-            - Ainda não foram realizados.
-
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta ChatGPT como apoio à revisão, definição e organização. Todo o conteúdo gerado foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
+    - Uso de IA:
+        ChatGPT como apoio ao planejamento, contrato da API e organização da documentação. Conteúdo revisado pelo desenvolvedor.
 
 02. Semana 02 — Modelo relacional e consultas PostgreSQL
-    - Encontro 1
-        Data: 05/10/2026
+    Encontros: 1 (05/10/2026) e 2 (07/10/2026)
 
-        - O que foi feito:
-            - Elaboração da documentação do modelo entidade-relacionamento.
-            - Definição das entidades, atributos, chaves primárias e chaves estrangeiras.
-            - Definição dos relacionamentos e das cardinalidades entre as entidades.
-            - Criação do diagrama visual do modelo e-r.
-            - Documentação das decisões relacionadas ao banco de dados.
-            - Criação do script SQL para estruturar as tabelas no PostgreSQL.
-            - Definição das restrições de integridade e dos valores permitidos para tipo de usuário, prioridade e status.
-            - Criação dos índices para apoiar as consultas previstas.
+    - O que foi feito:
+        - Modelo ER com as entidades usuarios, categorias, chamados, comentarios e historico_status.
+        - Definição de relacionamentos, cardinalidades, chaves, restrições, índices e regras de exclusão.
+        - Criação de schema.sql, seed.sql e consultas.sql, com dados fictícios para validação.
 
-        - Decisões tomadas:
-            - O PostgreSQL será utilizado como sistema gerenciador de banco de dados.
-            - O modelo será composto por 5 tabelas.
-            - Os comentários e o histórico de status serão armazenados em tabelas separadas.
-            - A abertura de chamados e as alterações de status deverão registrar o histórico na mesma transação da operação correspondente.
-            - Os valores de prioridade e status seguirão as definições dos requisitos do projeto.
-            - As exclusões de registros relacionados serão restringidas para preservar a integridade dos dados.
+    - Decisões:
+        - PostgreSQL como banco de dados.
+        - Comentários e histórico em tabelas separadas.
+        - Abertura de chamado e alteração de status registram histórico na mesma transação.
+        - Exclusões de registros relacionados serão restritivas.
 
-        - Testes realizados:
-            - Execução e validação do script de criação das tabelas no PostgreSQL.
-            - Execução e validação das restrições e dos relacionamentos definidos no esquema.
+    - Testes:
+        - Execução do schema, das restrições, do seed e das consultas SQL no PostgreSQL.
 
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta ChatGPT como apoio à revisão do modelo entidade-relacionamento, à documentação das decisões do banco de dados e à criação do script SQL. Todo o conteúdo gerado foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
-
-    - Encontro 2
-        Data: 07/10/2026
-
-        - O que foi feito:
-            - Criação do script seed.sql com dados fictícios para testes.
-            - Criação do arquivo consultas.sql.
-            - Elaboração de consultas de testes do bando de dados.
-            - Validação dos scripts de inserção de dados e das consultas SQL.
-
-        - Decisões tomadas:
-            - Os dados utilizados nos testes serão fictícios, gerados por IA.
-            - Os dados de teste contemplarão diferentes prioridades e status para permitir validar as consultas.
-            - As consultas SQL serão mantidas em arquivo separado para facilitar sua organização e execução.
-            - A estrutura do banco e as consultas deverão permanecer coerentes com os requisitos, os casos de uso e o contrato da API.
-
-        - Testes realizados:
-            - Execução e validação do script seed.sql.
-            - Execução e validação das consultas documentadas em consultas.sql.
-
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta ChatGPT como apoio à revisão e organização dos scripts SQL. Todo o conteúdo gerado foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
+    - Uso de IA:
+        ChatGPT como apoio ao modelo ER, às decisões do banco e aos scripts SQL. Conteúdo revisado pelo desenvolvedor.
 
 03. Semana 03 — Base Laravel e persistência
-    - Encontro 1
-        Data: 18/10/2026
+    Encontros: 1 e 2 (18/10/2026)
 
-        - O que foi feito:
-            - Inicialização da aplicação Laravel.
-            - Configuração do Composer e das dependências.
-            - Criação do arquivo '.env.example'.
-            - Configuração da conexão com PostgreSQL.
-            - Criação das migrations para usuários, categorias, chamados, comentários e histórico de status.
-            - Definição das chaves estrangeiras, restrições e índices.
-            - Criação da rota 'GET /api/saude'.
+    - O que foi feito:
+        - Inicialização do Laravel, configuração do Composer, .env.example e conexão com PostgreSQL.
+        - Criação das migrations, models, relacionamentos e seeders.
+        - Criação da rota GET /api/saude.
 
-        - Testes realizados:
-            - Execução de 'php artisan migrate'.
-            - Execução de 'php artisan migrate:fresh --seed'.
-            - Verificação da rota 'GET /api/saude'.
-            - Resposta obtida:
-              '{"dados":{"aplicacao":"ChamadoJá","status":"funcionando"}}'
+    - Decisões:
+        - Manter PostgreSQL e a estrutura de cinco tabelas de negócio.
+        - Persistir os relacionamentos e dados fictícios pelos seeders.
 
-    - Encontro 2
-        Data: 18/10/2026
+    - Testes:
+        - php artisan migrate e php artisan migrate:fresh --seed executados.
+        - Verificação da rota de saúde e dos registros criados.
 
-        - O que foi feito:
-            - Criação dos models Eloquent.
-            - Configuração dos relacionamentos entre usuários, categorias, chamados, comentários e histórico.
-            - Criação dos seeders.
-            - Inserção de dados fictícios relacionados.
-            - Atualização das instruções de instalação no README.
-
-        - Testes realizados:
-            - Execução de 'php artisan migrate:fresh --seed'.
-            - Verificação da criação dos usuários, categorias, chamados, comentários e históricos.
-
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta ChatGPT como apoio à revisão da base Laravel, das migrations, dos models, dos relacionamentos e dos seeders. Todo o conteúdo foi revisado e compreendido pelo desenvolvedor.
+    - Uso de IA:
+        Codex como apoio à base Laravel, migrations, models, relacionamentos e seeders. Conteúdo revisado pelo desenvolvedor.
 
 04. Semana 04 — API principal de usuários, categorias e chamados
-    - Encontro 1
-        Data: 25/10/2026
+    Encontros: 1 e 2 (25/10/2026)
 
-        - O que foi feito:
-            - Criação dos controllers, Form Requests e rotas de usuários, categorias e chamados.
-            - Implementação das validações de campos obrigatórios, unicidade, existência de registros, tamanhos e prioridades.
-            - Definição do status inicial 'aberto' no servidor.
-            - Organização dos controllers para utilizar Form Requests e models Eloquent.
+    - O que foi feito:
+        - Controllers, Form Requests, Resources e rotas de usuários, categorias e chamados.
+        - Validações de campos obrigatórios, unicidade, existência, tamanhos e prioridades.
+        - Respostas com envelope dados, relacionamentos resumidos e erro JSON para recurso inexistente.
+        - Correção do fuso horário da conexão PostgreSQL para UTC.
 
-        - Decisões tomadas:
-            - As prioridades continuam sendo 'normal', 'alta' e 'urgente'.
-            - O status inicial do chamado será sempre 'aberto'.
-            - A atualização permitirá apenas categoria_id, titulo, descricao e prioridade.
-            - solicitante_id e status não poderão ser alterados pela rota PATCH.
-            - O cadastro de usuário não receberá senha nesta etapa.
-            - Filtros e paginação ficam para a próxima etapa.
+    - Decisões:
+        - Todo chamado nasce com status aberto.
+        - A atualização aceita apenas categoria_id, titulo, descricao e prioridade.
+        - Criações retornam 201; consultas e atualizações, 200; dados inválidos, 422; recurso inexistente, 404.
+        - O cadastro ainda não recebia senha nesta etapa.
 
-        - Testes realizados:
-            - Ainda não foram realizados neste encontro.
+    - Testes:
+        - Testes manuais dos endpoints com PowerShell, incluindo cadastros, consultas, atualizações e erros.
 
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta Codex como apoio à definição das rotas, controllers, validações e organização do código. Todo o conteúdo foi revisado, aplicado e compreendido pelo desenvolvedor.
+    - Uso de IA:
+        Codex como apoio às rotas, controllers, validações, Resources e correção de fuso. Conteúdo revisado e testado pelo desenvolvedor.
 
-    - Encontro 2
-        Data: 25/10/2026
+05. Semana 05 — Regras de negócio e consultas integradas
+    Encontros: 1 e 2 (02/11/2026)
 
-        - O que foi feito:
-            - Criação dos Resources de usuários, categorias e chamados.
-            - Padronização das respostas com o envelope 'dados'.
-            - Inclusão dos relacionamentos solicitante e categoria no Resource de chamados.
-            - Implementação de resposta JSON para recursos inexistentes.
-            - Correção do fuso horário da conexão PostgreSQL para UTC.
-            - Execução dos testes manuais dos endpoints.
-            - Atualização do contrato da API, README e diário.
+    - O que foi feito:
+        - Comentários, alteração de status, histórico e consulta de histórico.
+        - Registro da abertura do chamado e das mudanças de status na mesma transação.
+        - Filtros por status, prioridade, categoria e solicitante.
+        - Paginação, ordenação e resumo por status, prioridade e categoria.
 
-        - Decisões tomadas:
-            - Criações retornarão HTTP 201.
-            - Consultas e atualizações retornarão HTTP 200.
-            - Dados inválidos retornarão HTTP 422.
-            - Recursos inexistentes retornarão HTTP 404 com mensagem JSON.
-            - Comentários, alteração de status, histórico, filtros, paginação e resumo ficam para as próximas etapas.
+    - Decisões:
+        - Status: aberto, em_andamento, resolvido e fechado.
+        - Transições: aberto -> em_andamento; em_andamento -> resolvido; resolvido -> fechado ou em_andamento; fechado -> nenhuma.
+        - Prioridades: normal, alta e urgente, com peso urgente, alta e normal na ordenação.
+        - Paginação padrão de 15, com por_pagina entre 1 e 100.
+        - O resumo sempre retorna todas as chaves de status e prioridade, inclusive com zero.
 
-        - Testes realizados:
-            - Testes manuais dos endpoints com PowerShell.
-            - Cadastro válido de usuário e categoria: resposta 201.
-            - Email e nome de categoria repetidos: resposta 422.
-            - Abertura de chamado válida: resposta 201 com status 'aberto'.
-            - Consulta e atualização de chamado: resposta 200.
-            - Dados inválidos, solicitante inexistente e categoria inexistente: resposta 422.
-            - Chamado inexistente: resposta 404.
-            - Verificação da coerência dos timestamps após a correção do fuso horário.
+    - Testes:
+        - Testes manuais de comentários, transições válidas e inválidas, histórico, filtros, ordenação, paginação e resumo.
 
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta Codex como apoio à implementação, revisão, correção do fuso horário e organização da documentação. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
-
-05. Semana 05 — Relacionamentos, regras de negócio e consultas integradas
-    - Encontro 1
-        Data: 02/11/2026
-
-        - O que foi feito:
-            - Implementação das rotas de comentários: listagem e cadastro.
-            - Criação do Form Request de comentário, com remoção de espaços antes da validação.
-            - Criação do Resource de comentário, expondo o autor de forma resumida.
-            - Criação da classe AlterarStatusDoChamado, com a regra de transição.
-            - Implementação da alteração de status com transação e registro no histórico.
-            - Registro da abertura do chamado no histórico, dentro da transação de criação.
-            - Implementação da consulta de histórico do chamado.
-
-        - Decisões tomadas:
-            - Os status continuam sendo aberto, em_andamento, resolvido e fechado.
-            - O enunciado usava em_atendimento como exemplo; foi mantido o padrão já adotado no banco e na documentação.
-            - Transições permitidas: aberto para em_andamento; em_andamento para resolvido; resolvido para em_andamento ou fechado; fechado para nenhum status.
-            - Transição não permitida retorna HTTP 422 com mensagem específica.
-            - O histórico registra o usuário responsável, informado em usuario_id.
-            - Todo chamado registra a abertura no histórico, com status_anterior nulo.
-
-        - Testes realizados:
-            - Listagem de comentários: resposta 200.
-            - Cadastro de comentário válido: resposta 201.
-            - Comentário com autor inexistente e com conteúdo vazio: resposta 422.
-            - Comentários de chamado inexistente: resposta 404.
-            - Transição aberto para fechado: resposta 422.
-            - Transição aberto para em_andamento: resposta 200, com registro no histórico.
-            - Status inexistente e usuário inexistente na alteração: resposta 422.
-            - Histórico de chamado inexistente: resposta 404.
-
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta Codex como apoio na implementação dos comentários, da regra de transição, do histórico e dos testes manuais. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
-
-    - Encontro 2
-        Data: 02/11/2026
-
-        - O que foi feito:
-            - Implementação de filtros por status, prioridade, categoria e solicitante.
-            - Implementação de paginação com limite configurável por página.
-            - Implementação de ordenação com lista de campos permitidos.
-            - Ordenação por prioridade considerando o peso urgente, alta e normal.
-            - Criação do endpoint de resumo com totais por status, prioridade e categoria.
-            - Atualização do contrato da API, do README e deste diário.
-
-        - Decisões tomadas:
-            - Filtros por categoria_id e solicitante_id não validam existência; id inexistente retorna lista vazia.
-            - A ordenação aceita apenas criado_em, prioridade e status, com ordem asc ou desc.
-            - por_pagina tem valor padrão 15 e máximo 100.
-            - O resumo sempre retorna as quatro chaves de status e as três de prioridade, mesmo com valor zero.
-            - O resumo usa consultas agregadas no banco, sem contar registros em PHP.
-
-        - Testes realizados:
-            - Listagem paginada com dados, links e meta: resposta 200.
-            - Filtros individuais e combinados: resposta 200 com os registros esperados.
-            - Ordenação por prioridade: alta antes de normal.
-            - Paginação com por_pagina igual a 2: duas páginas e total 3.
-            - Campo de ordenação não permitido e status inválido: resposta 422.
-            - Resumo antes e depois de abrir um chamado: totais atualizados corretamente.
-
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta Codex como apoio na implementação dos filtros, da paginação, da ordenação e do resumo agregado. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
+    - Uso de IA:
+        Codex como apoio às regras de transição, comentários, filtros, paginação e resumo. Conteúdo revisado e testado pelo desenvolvedor.
 
 06. Semana 06 — Autenticação, segurança e qualidade da API
-    - Encontro 1
-        Data: 09/11/2026
+    Encontros: 1 (09/11/2026), 2 (11/11/2026) e 3 extra (22/11/2026)
 
-        - O que foi feito:
-            - Pesquisa sobre autenticação, autorização, hash de senhas, tokens de acesso e Laravel Sanctum.
-            - Criação do arquivo docs/pesquisa-autenticacao.md.
-            - Levantamento dos dados que não devem ser expostos nas respostas da API.
-            - Análise dos riscos de manter todos os endpoints públicos.
-            - Proposta das funcionalidades que deverão ser protegidas em uma futura versão.
+    - O que foi feito:
+        - Pesquisa sobre autenticação, autorização, hash, tokens e Laravel Sanctum.
+        - Configuração do PHPUnit com PostgreSQL e banco chamadoja_test.
+        - Criação de factories e testes de feature para usuários, categorias, chamados e comentários.
+        - Padronização dos erros 401, 403, 404, 422 e 429 e tradução das validações para português.
+        - Instalação do Sanctum, criação de personal_access_tokens, login, logout e proteção das rotas.
+        - Cadastro com senha e confirmação, armazenando apenas o hash em senha_hash.
 
-        - Decisões tomadas:
-            - A autenticação continua fora do escopo obrigatório desta versão.
-            - A implementação do Laravel Sanctum permanece opcional e não foi iniciada.
-            - A proteção das rotas e a autorização por tipo de usuário ficam registradas como proposta para uma etapa futura.
+    - Decisões:
+        - O banco de testes permanece separado do banco de desenvolvimento.
+        - As respostas de erro usam as chaves mensagem e erros.
+        - A autenticação foi implementada como extensão opcional da Semana 6.
+        - Permanecem públicos GET /api/saude, POST /api/login e POST /api/usuarios.
+        - Não há autorização por tipo de usuário; o usuario_id ainda é informado no corpo.
+        - Usuários antigos sem senha não conseguem autenticar.
 
-        - Testes realizados:
-            - Ainda não foram realizados neste encontro.
+    - Testes:
+        - php -l sem erros de sintaxe.
+        - php artisan test: 17 testes e 79 asserções após a configuração inicial.
+        - php artisan test: 22 testes e 100 asserções após o Sanctum.
+        - Login, senha incorreta, logout e acesso sem token cobertos por testes.
 
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta Codex como apoio à pesquisa, à organização do documento e à análise dos riscos. Todo o conteúdo foi revisado e compreendido pelo desenvolvedor antes de ser utilizado.
+    - Uso de IA:
+        Codex como apoio à pesquisa, testes, padronização de erros, tradução e implementação do Sanctum. Conteúdo revisado e testado pelo desenvolvedor.
 
-    - Encontro 2
-        Data: 11/11/2026
+07. Semana 07 — Testes finais, documentação e entrega
+    Encontros: 1 e 2 (22/11/2026)
 
-        - O que foi feito:
-            - Configuração do ambiente de testes automatizados com PHPUnit e banco PostgreSQL separado (chamadoja_test).
-            - Criação de factories para usuario, categoria e chamado.
-            - Criação de testes de feature para usuarios, categorias, chamados e comentarios.
-            - Padronização das respostas de erro da API no formato mensagem e erros.
-            - Tratamento dos erros 401, 403, 404, 422 e 429 no bootstrap/app.php.
-            - Tradução das mensagens de validação para português em lang/pt_BR/validation.php.
-            - Definição de APP_LOCALE=pt_BR no .env, no .env.example e no phpunit.xml.
-            - Atualização do README e do contrato da API com o ambiente de testes e o formato dos erros.
+    - O que foi feito:
+        - Teste automatizado do resumo de chamados e ampliação da suíte para 23 testes e 116 asserções.
+        - Instalação limpa em pasta e banco separados, com migrations, seeders, testes e API em funcionamento.
+        - README final com instalação sequencial, 16 endpoints, exemplos, regras e limitações.
+        - Revisão de requisitos, casos de uso, modelo ER, decisões do banco e pesquisa de autenticação.
+        - Auditoria de segurança do repositório e das dependências.
+        - Atualização de Laravel e componentes Symfony para corrigir avisos de segurança.
 
-        - Decisões tomadas:
-            - Os testes automatizados usam o banco chamadoja_test no PostgreSQL, separado do banco de desenvolvimento.
-            - O banco de testes foi escolhido por causa das migrations com ALTER TABLE ... ADD CONSTRAINT, específicas do PostgreSQL.
-            - O envelope de erro permanece com as chaves mensagem e erros.
-            - As mensagens de validação serão exibidas em português, com os nomes dos campos traduzidos e acentuados.
-            - A tradução cobre as regras usadas pela API e as regras mais comuns, sem criar um arquivo completo de tradução.
-            - O Laravel Sanctum continua apenas pesquisado, sem implementação nesta etapa.
+    - Decisões:
+        - PostgreSQL permanece como banco de desenvolvimento e de testes.
+        - A estrutura e os nomes atuais dos arquivos foram mantidos.
+        - A autenticação foi registrada como extensão implementada.
+        - personal_access_tokens foi documentada como tabela de apoio do Sanctum.
+        - As credenciais dos seeders são fictícias e foram documentadas no README.
 
-        - Testes realizados:
-            - php -l nos arquivos PHP criados e alterados: sem erros de sintaxe.
-            - php artisan test: 17 testes e 79 asserções, todos aprovados.
-            - Verificação manual de validação com campo titulo vazio: mensagem "O campo título é obrigatório.".
+    - Testes:
+        - php artisan test: 23 testes e 116 asserções, todos aprovados.
+        - composer audit antes da atualização: 9 avisos em 6 pacotes.
+        - composer audit após a atualização: nenhum aviso de segurança.
+        - .env ignorado, .env.example sem chave ou senha e nenhum token real no histórico.
+        - Instalação limpa validada com rota de saúde, login e consulta autenticada de chamados.
 
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta Codex como apoio na configuração dos testes, na criação das factories e dos testes de feature, na padronização dos erros e na tradução das mensagens de validação. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
+    - Pendências:
+        - Revisão entre equipes, que será realizada em aula.
+        - Commit final release: semana 07 - projeto final.
+        - Criação e envio da tag v1.0.0.
+        - Reinstalação opcional com a versão final.
 
-    - Encontro 3 (extra)
-        Data: 22/11/2026
+    - Uso de IA:
+        Codex como apoio aos testes finais, README, revisão documental, auditoria de segurança e atualização de dependências. Conteúdo revisado e validado pelo desenvolvedor.
 
-        - O que foi feito:
-            - Instalação do Laravel Sanctum e criação da tabela personal_access_tokens.
-            - Configuração do model Usuario como Authenticatable, com HasApiTokens e autenticação por senha_hash.
-            - Ajuste do provider de autenticação para App\Models\Usuario.
-            - Inclusão de senha e confirmação no cadastro de usuário, com gravação de hash.
-            - Criação das rotas POST /api/login e POST /api/logout.
-            - Proteção das rotas de recursos com auth:sanctum.
-            - Atualização dos testes, do contrato da API e do README.
-
-        - Decisões tomadas:
-            - A autenticação foi implementada como extensão opcional da Semana 6.
-            - O token é enviado no header Authorization: Bearer <token>.
-            - Permanecem públicos GET /api/saude, POST /api/login e POST /api/usuarios.
-            - Não foram implementadas regras de autorização por tipo de usuário nesta etapa.
-            - A senha é armazenada em senha_hash e nunca é retornada pela API.
-            - Usuários cadastrados antes desta etapa, sem senha, não conseguem autenticar.
-
-        - Testes realizados:
-            - php -l nos arquivos PHP criados e alterados: sem erros de sintaxe.
-            - php artisan test: 22 testes e 100 asserções, todos aprovados.
-            - Login válido, senha incorreta, logout sem token, logout com token e rota protegida sem token cobertos por testes.
-
-        - Uso de inteligência artificial:
-            Foi utilizada a ferramenta Codex como apoio na instalação e configuração do Sanctum, na criação das rotas de autenticação, na proteção das rotas e na atualização dos testes e da documentação. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
+ESTADO FINAL
+    - API com 16 rotas, PostgreSQL e autenticação com Sanctum.
+    - 23 testes e 116 asserções aprovados.
+    - Nenhum aviso de segurança no composer audit.
+    - Documentação revisada e instalação limpa validada.
+    - Pendentes: revisão entre equipes, commit final, tag v1.0.0 e push.

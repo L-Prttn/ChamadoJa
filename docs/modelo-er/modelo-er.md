@@ -2,7 +2,9 @@ MODELO ENTIDADE-RELACIONAMENTO (ER)
 
 1. Objetivo
     API REST para gerenciamento de chamados de suporte. O modelo foi definido com base nos requisitos, casos de uso e contrato da API elaborados na Semana 1.
-    O banco de dados será o PostgreSQL. Contempla usuários, categorias, chamados, comentários e histórico de alterações de status.
+    O banco de dados será o PostgreSQL. Contempla usuários, categorias, chamados,
+    comentários e histórico de alterações de status. O Laravel Sanctum acrescenta
+    a tabela `personal_access_tokens` para armazenar os tokens de acesso.
 
 2. Entidades
     2. 1. Usuários (`usuarios`)
@@ -13,7 +15,7 @@ MODELO ENTIDADE-RELACIONAMENTO (ER)
         | `id`              |   Inteiro         |   Chave primária, gerada automaticamente
         | `nome`            |   Texto           |   Obrigatório
         | `email`           |   Texto           |   Obrigatório e único
-        | `senha_hash`      |   Texto           |   Opcional (na versao inicial); deve armazenar somente o hash
+        | `senha_hash`      |   Texto           |   Opcional no banco para compatibilidade; obrigatório no cadastro pela API; deve armazenar somente o hash
         | `tipo`            |   Texto           |   Obrigatório; valores: `usuario` ou `atendente`
         | `criado_em`       |   Data e hora     |   Obrigatório, preenchido automaticamente
         | `atualizado_em`   |   Data e hora     |   Obrigatório, atualizado nas alterações
@@ -92,7 +94,7 @@ MODELO ENTIDADE-RELACIONAMENTO (ER)
     - Os comentários não podem ter conteúdo vazio.
     - Toda mudança de status deve gerar um registro no histórico, sem substituir os registros anteriores.
     - O registro inicial do histórico é a única situação em que `status_anterior` pode ser `NULL`.
-    - A senha, caso armazenada, nunca deve ser salva em texto puro.
+    - A senha informada no cadastro deve ser armazenada somente como hash e nunca deve ser retornada pela API.
 
     As restrições de valores permitidos deverão ser implementadas no PostgreSQL, além das validações realizadas pela aplicação.
 
@@ -105,7 +107,17 @@ MODELO ENTIDADE-RELACIONAMENTO (ER)
         O histórico fica em uma tabela própria para preservar cada alteração de status ao longo do tempo. A coluna `status` da tabela `chamados` representa somente o estado atual. Já a tabela `historico_status` registra os estados anteriores e as mudanças realizadas.
 
     - Identificação dos responsáveis
-        Os comentários e as mudanças de status terão um usuário responsável associado. Como a autenticação não é obrigatória na primeira versão, a API deverá receber ou identificar esse usuário de alguma forma. O contrato da API deverá ser ajustado para contemplar essa informação nos endpoints correspondentes.
+        Os comentários e as mudanças de status têm um usuário responsável associado.
+        As rotas de recursos são protegidas por autenticação com token, mas a API
+        ainda recebe o usuario_id no corpo das requisições de comentário e de
+        alteração de status. O vínculo automático com o usuário autenticado é uma
+        melhoria futura.
+
+    - Autenticação e tokens
+        O login utiliza email e senha e gera um token pelo Laravel Sanctum. O token
+        é enviado no header Authorization: Bearer <token> e pode ser revogado no
+        logout. Os tokens ficam na tabela `personal_access_tokens`, que é uma tabela
+        de apoio da autenticação e não uma entidade de negócio do ChamadoJá.
 
     - Chamados sem atendente responsável
         Nesta versão, não será incluída uma relação direta entre chamados e um atendente designado. O requisito atual não define essa atribuição. A inclusão poderá ser avaliada futuramente, caso o projeto passe a exigir distribuição de chamados entre atendentes.
@@ -122,9 +134,13 @@ MODELO ENTIDADE-RELACIONAMENTO (ER)
         - `comentarios.chamado_id`, para buscar comentários de um chamado.
         - `historico_status.chamado_id`, para consultar o histórico de um chamado.
 
-    Os índices definitivos serão implementados no `database/schema.sql`, considerando também as consultas documentadas em `docs/consultas.sql`.
+    Os índices definitivos serão implementados no `database/schema.sql`, considerando também as consultas documentadas em `database/consultas.sql`.
 
 7. Escopo e observações
-    Este modelo representa a estrutura inicial do banco de dados do ChamadoJá e poderá ser ajustado conforme a implementação e os testes. As decisões devem permanecer coerentes com `requisitos.md`, `casos-de-uso.md` e o contrato da API.
+    Este modelo representa a estrutura do banco de dados do ChamadoJá e poderá ser
+    ajustado conforme a implementação e os testes. As decisões devem permanecer
+    coerentes com `docs/requisitos.md`, `docs/casos_de_uso.md` e o contrato da API.
 
     O diagrama visual correspondente será documentado em `docs/modelo-er/modelo-er.png`.
+    O diagrama representa as entidades de negócio; a tabela de tokens do Sanctum
+    é uma tabela de apoio da autenticação e não faz parte desse diagrama.

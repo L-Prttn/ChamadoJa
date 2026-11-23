@@ -4,9 +4,11 @@ BEGIN;
 -- =====================================================
 -- Tabela: usuarios
 -- Armazena solicitantes e atendentes.
--- A senha é opcional nesta versão, pois a autenticação
--- não faz parte do escopo obrigatório inicial.
--- Quando utilizada, deve conter somente o hash.
+-- O senha_hash é opcional no banco para compatibilidade
+-- com registros antigos, mas o cadastro pela API exige senha.
+-- Quando armazenado, deve conter somente o hash.
+-- A tabela personal_access_tokens é criada separadamente
+-- pela migration do Laravel Sanctum.
 -- =====================================================
 
 CREATE TABLE usuarios (

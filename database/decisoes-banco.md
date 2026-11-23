@@ -4,11 +4,14 @@ DECISÕES DO BANCO DE DADOS
     Utilizará o PostgreSQL como sistema gerenciador de banco de dados. A escolha permite utilizar chaves estrangeiras, restrições de integridade, transações e índices para manter os dados consistentes e facilitar as consultas.
 
 2. Organização das tabelas
-    O modelo será dividido em cinco tabelas: `usuarios`, `categorias`, `chamados`, `comentarios` e `historico_status`.
+    O modelo de negócio será dividido em cinco tabelas: `usuarios`, `categorias`,
+    `chamados`, `comentarios` e `historico_status`.
     Essa separação evita a duplicação de informações e facilita a manutenção dos dados. Cada tabela terá uma responsabilidade específica, conforme descrito em `docs/modelo-er/modelo-er.md`.
+    Além dessas tabelas, o Laravel Sanctum cria `personal_access_tokens` para
+    armazenar os tokens de acesso usados na autenticação.
 
 3. Chaves primárias e estrangeiras
-    Todas as tabelas terão uma chave primária `id`, gerada automaticamente pelo banco de dados.
+    Todas as tabelas de negócio terão uma chave primária `id`, gerada automaticamente pelo banco de dados.
     As chaves estrangeiras serão utilizadas para representar os relacionamentos entre as tabelas:
         - `chamados.solicitante_id` referencia `usuarios.id`.
         - `chamados.categoria_id` referencia `categorias.id`.
@@ -22,6 +25,8 @@ DECISÕES DO BANCO DE DADOS
     Campos essenciais serão definidos como obrigatórios (`NOT NULL`). Campos com informações que não podem se repetir terão restrições `UNIQUE`.
     O e-mail será único na tabela `usuarios`. O nome será único na tabela `categorias`, considerando que cada nome representa uma categoria distinta nesta versão do projeto.
     Campos opcionais, como a descrição de uma categoria, poderão aceitar `NULL`.
+    O campo `senha_hash` permanece opcional no banco para compatibilidade com
+    registros antigos, mas o cadastro realizado pela API exige senha.
 
 5. Valores permitidos para tipo, prioridade e status
     Os valores permitidos serão definidos por restrições `CHECK` no PostgreSQL, além das validações feitas pela aplicação.
@@ -38,7 +43,10 @@ DECISÕES DO BANCO DE DADOS
 7. Registro inicial e autoria do histórico
     Quando um chamado for aberto, a aplicação deverá criar o chamado e seu registro inicial de histórico na mesma transação. O registro inicial terá `status_anterior` igual a `NULL`, `status_novo` igual a `aberto` e `usuario_id` correspondente ao solicitante.
     Nas mudanças seguintes, o histórico registrará o status anterior, o novo status, o usuário responsável e a data e hora da alteração.
-    Os comentários também deverão estar associados ao usuário que os registrou. Como a autenticação não é obrigatória nesta primeira versão, a aplicação precisará receber ou identificar o usuário responsável. O contrato da API deverá refletir essa regra.
+    Os comentários também deverão estar associados ao usuário que os registrou.
+    As rotas são protegidas por autenticação, mas a API ainda recebe `usuario_id`
+    no corpo das requisições de comentário e de alteração de status. O vínculo
+    automático com o usuário autenticado é uma melhoria futura.
 
 8. Datas e horários
     As tabelas utilizarão campos de data e hora para registrar a criação e, quando aplicável, a última atualização dos registros.
@@ -62,12 +70,17 @@ DECISÕES DO BANCO DE DADOS
     Da mesma forma, a alteração do status e a inclusão do respectivo histórico deverão ocorrer na mesma transação, evitando que o status atual fique diferente do histórico registrado.
 
 12. Segurança das credenciais
-Caso a implementação armazene senhas, elas deverão ser armazenadas utilizando hash apropriado, nunca em texto puro. O acesso ao banco e os dados recebidos pela API também deverão ser tratados de forma segura.
+    As senhas são armazenadas em `senha_hash` utilizando o hash do Laravel, nunca
+    em texto puro, e não são retornadas pela API. O login gera um token pelo
+    Laravel Sanctum; o banco armazena o hash do token em `personal_access_tokens`,
+    e o valor completo é retornado ao cliente somente no login. O logout revoga o
+    token atual. O arquivo `.env` não é versionado e as credenciais do PostgreSQL
+    permanecem fora do repositório.
 
 13. Documentos relacionados
     Estas decisões complementam os seguintes documentos do projeto:
     - `docs/requisitos.md`: requisitos funcionais e não funcionais.
-    - `docs/casos-de-uso.md`: ações realizadas pelos usuários e atendentes.
+    - `docs/casos_de_uso.md`: ações realizadas pelos usuários e atendentes.
     - `docs/contrato-api.md`: endpoints e formato das requisições e respostas.
     - `docs/modelo-er/modelo-er.md`: entidades, atributos e relacionamentos.
     - `database/consultas.sql`: consultas previstas para validar e utilizar o modelo.

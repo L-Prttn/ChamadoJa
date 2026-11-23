@@ -56,6 +56,10 @@ REQUISITOS do ChamadoJá
         Fornecer informações resumidas sobre os chamados, incluindo quantidade por status, prioridade ou categoria.
     RF16 - Validar dados
         O sistema deverá validar os dados recebidos nas requisições e rejeitar dados inválidos.
+    RF17 - Autenticar usuário
+        Autenticar o usuário com email e senha e gerar um token de acesso para as rotas protegidas.
+    RF18 - Encerrar sessão
+        Revogar o token utilizado na requisição de logout.
 
 5. Requisitos não funcionais:
 
@@ -74,7 +78,7 @@ REQUISITOS do ChamadoJá
     RNF07 - Testes
         Os principais fluxos da aplicação deverão possuir testes.
     RNF08 - Segurança das credenciais
-        Senhas, tokens e outras credenciais não deverão ser armazenados no repositório.
+        Credenciais reais, chaves e tokens de acesso não deverão ser armazenados no repositório. Credenciais fictícias usadas em seeders de demonstração devem ser identificadas como tal.
     RNF09 - Mensagens de erro
         Deverá retornar mensagens de erro claras quando os dados enviados forem inválidos.
     RNF10 - Códigos HTTP
@@ -128,9 +132,11 @@ REQUISITOS do ChamadoJá
     - envio de notificações por e-mail ou SMS;
     - sistema comercial ou de cobrança;
     - funcionalidades avançadas de inteligência artificial;
-    - implementação obrigatória de autenticação.
+    - autenticação como requisito obrigatório da primeira versão.
 
-    A autenticação será tratada inicialmente como tema de pesquisa. Uma implementação utilizando Laravel Sanctum poderá ser realizada posteriormente como extensão do projeto.
+    A autenticação não era obrigatória no escopo inicial, mas foi implementada
+    como extensão do projeto com Laravel Sanctum. A API possui login, logout e
+    proteção das rotas de recursos, sem alterar as funcionalidades principais.
 
 8. Dúvidas e hipóteses da equipe
 
