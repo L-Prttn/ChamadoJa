@@ -7,11 +7,19 @@ use App\Models\Chamado;
 use App\Models\HistoricoStatus;
 use App\Models\Usuario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ChamadoTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Sanctum::actingAs(Usuario::factory()->create());
+    }
 
     public function test_cria_chamado_valido_com_historico_de_abertura(): void
     {

@@ -7,6 +7,7 @@ use App\Http\Requests\ArmazenarUsuarioRequest;
 use App\Http\Resources\UsuarioResource;
 use App\Models\Usuario;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsuarioController extends Controller
@@ -20,7 +21,11 @@ class UsuarioController extends Controller
 
     public function store(ArmazenarUsuarioRequest $request): JsonResponse
     {
-        $usuario = Usuario::create($request->validated());
+        $dados = $request->validated();
+        $dados['senha_hash'] = Hash::make($dados['senha']);
+        unset($dados['senha']);
+
+        $usuario = Usuario::create($dados);
 
         return (new UsuarioResource($usuario))
             ->response()

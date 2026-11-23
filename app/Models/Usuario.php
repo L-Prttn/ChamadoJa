@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
+    use HasApiTokens;
     use HasFactory;
 
     protected $table = 'usuarios';
@@ -26,6 +28,11 @@ class Usuario extends Model
     protected $hidden = [
         'senha_hash',
     ];
+
+    public function getAuthPassword(): ?string
+    {
+        return $this->senha_hash;
+    }
 
     public function chamados(): HasMany
     {

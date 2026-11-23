@@ -2,12 +2,21 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\Usuario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class CategoriaTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Sanctum::actingAs(Usuario::factory()->create());
+    }
 
     public function test_cria_categoria_valida(): void
     {

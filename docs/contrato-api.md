@@ -7,8 +7,8 @@ Situação atual:
 - Rotas de usuários, categorias e chamados implementadas na Semana 4.
 - Comentários, alteração de status, histórico, filtros, paginação e resumo implementados na Semana 5.
 - Testes automatizados e respostas de erro padronizadas implementados na Semana 6.
-- A implementação do Laravel Sanctum não foi realizada; permanece como extensão opcional.
-- A autenticação não é obrigatória nesta primeira versão.
+- Autenticação com Laravel Sanctum implementada como extensão opcional da Semana 6.
+- As rotas de recursos exigem token, exceto saúde, login e cadastro de usuário.
 
 1. Usuários
 
@@ -46,12 +46,15 @@ Situação atual:
             {
                 "nome": "Usuario Exemplo",
                 "email": "usuario@example.test",
+                "senha": "senha-teste",
+                "senha_confirmation": "senha-teste",
                 "tipo": "usuario"
             }
 
         Validações:
             nome: obrigatório, texto, máximo de 150 caracteres;
             email: obrigatório, email válido, máximo de 255 caracteres e único;
+            senha: obrigatório, texto, mínimo de 8 caracteres e confirmação em senha_confirmation;
             tipo: obrigatório; valores permitidos: usuario ou atendente.
 
         Resposta esperada:
@@ -525,7 +528,71 @@ Situação atual:
                 }
             }
 
-5. Regras gerais
+5. Autenticação
+
+    - POST      /api/login
+        Objetivo:
+            Autenticar um usuário e gerar um token de acesso.
+
+        Entrada:
+            {
+                "email": "usuario@example.test",
+                "senha": "senha-teste"
+            }
+
+        Validações:
+            email: obrigatório e email válido;
+            senha: obrigatório, texto.
+
+        Resposta esperada:
+            Código HTTP 200 com o token e os dados do usuário.
+
+        Exemplo de resposta:
+            {
+                "dados": {
+                    "token": "1|token-gerado",
+                    "usuario": {
+                        "id": 2,
+                        "nome": "Usuario Exemplo",
+                        "email": "usuario@example.test",
+                        "tipo": "usuario",
+                        "criado_em": "...",
+                        "atualizado_em": "..."
+                    }
+                }
+            }
+
+        Em caso de credenciais inválidas:
+            Retornar código HTTP 401 com a mensagem "Credenciais inválidas.".
+
+        Limite de tentativas:
+            Até 5 tentativas por minuto por origem.
+
+    - POST      /api/logout
+        Objetivo:
+            Revogar o token utilizado na requisição.
+
+        Entrada:
+            Header Authorization: Bearer <token>.
+
+        Resposta esperada:
+            Código HTTP 200 com a mensagem "Token revogado.".
+
+        Em caso de token ausente ou inválido:
+            Retornar código HTTP 401 com a mensagem "Não autenticado.".
+
+    - Uso do token
+        As rotas protegidas exigem o header:
+            Authorization: Bearer <token>
+
+        Rotas públicas:
+            GET /api/saude
+            POST /api/login
+            POST /api/usuarios
+
+        As demais rotas exigem autenticação.
+
+6. Regras gerais
 
     - As respostas de sucesso das rotas de recursos utilizam o envelope dados.
     - Os identificadores utilizados pela API devem seguir o padrão definido para o projeto, sem acentos.
@@ -549,9 +616,14 @@ Situação atual:
         {
             "mensagem": "Recurso não encontrado."
         }
+        Não autenticado (401):
+        {
+            "mensagem": "Não autenticado."
+        }
         Quando houver mais de um erro, a chave erros apresenta as mensagens por campo.
-    - A autenticação não é obrigatória nesta primeira versão.
-    - O campo senha_hash nunca deve ser retornado nas respostas.
+    - As rotas de recursos exigem token, exceto saúde, login e cadastro de usuário.
+    - O token deve ser enviado no header Authorization: Bearer <token>.
+    - Os campos senha e senha_hash nunca devem ser retornados nas respostas.
     - A listagem de chamados é paginada, com 15 registros por página por padrão.
     - A ordenação aceita apenas criado_em, prioridade e status.
     - Transições de status inválidas retornam código HTTP 422.

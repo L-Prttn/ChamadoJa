@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Api;
 
+use App\Models\Usuario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UsuarioTest extends TestCase
@@ -14,6 +16,8 @@ class UsuarioTest extends TestCase
         $resposta = $this->postJson('/api/usuarios', [
             'nome' => 'Usuario Teste',
             'email' => 'usuario.teste@example.test',
+            'senha' => 'senha-teste',
+            'senha_confirmation' => 'senha-teste',
             'tipo' => 'usuario',
         ]);
 
@@ -21,6 +25,7 @@ class UsuarioTest extends TestCase
             ->assertJsonPath('dados.nome', 'Usuario Teste')
             ->assertJsonPath('dados.email', 'usuario.teste@example.test')
             ->assertJsonPath('dados.tipo', 'usuario')
+            ->assertJsonMissingPath('dados.senha')
             ->assertJsonMissingPath('dados.senha_hash');
 
         $this->assertDatabaseHas('usuarios', [
@@ -28,6 +33,10 @@ class UsuarioTest extends TestCase
             'email' => 'usuario.teste@example.test',
             'tipo' => 'usuario',
         ]);
+
+        $usuario = Usuario::where('email', 'usuario.teste@example.test')->firstOrFail();
+
+        $this->assertTrue(Hash::check('senha-teste', $usuario->senha_hash));
     }
 
     public function test_campo_obrigatorio_ausente_retorna_erro_padronizado(): void

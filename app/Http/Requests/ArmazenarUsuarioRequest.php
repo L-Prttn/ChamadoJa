@@ -26,6 +26,7 @@ class ArmazenarUsuarioRequest extends FormRequest
         return [
             'nome' => ['required', 'string', 'max:150'],
             'email' => ['required', 'email', 'max:255', 'unique:usuarios,email'],
+            'senha' => ['required', 'string', 'min:8', 'confirmed'],
             'tipo' => ['required', Rule::in(['usuario', 'atendente'])],
         ];
     }

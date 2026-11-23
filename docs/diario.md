@@ -305,3 +305,31 @@ DIÁRIO DO PROJETO
 
         - Uso de inteligência artificial:
             Foi utilizada a ferramenta Codex como apoio na configuração dos testes, na criação das factories e dos testes de feature, na padronização dos erros e na tradução das mensagens de validação. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.
+
+    - Encontro 3 (extra)
+        Data: 22/11/2026
+
+        - O que foi feito:
+            - Instalação do Laravel Sanctum e criação da tabela personal_access_tokens.
+            - Configuração do model Usuario como Authenticatable, com HasApiTokens e autenticação por senha_hash.
+            - Ajuste do provider de autenticação para App\Models\Usuario.
+            - Inclusão de senha e confirmação no cadastro de usuário, com gravação de hash.
+            - Criação das rotas POST /api/login e POST /api/logout.
+            - Proteção das rotas de recursos com auth:sanctum.
+            - Atualização dos testes, do contrato da API e do README.
+
+        - Decisões tomadas:
+            - A autenticação foi implementada como extensão opcional da Semana 6.
+            - O token é enviado no header Authorization: Bearer <token>.
+            - Permanecem públicos GET /api/saude, POST /api/login e POST /api/usuarios.
+            - Não foram implementadas regras de autorização por tipo de usuário nesta etapa.
+            - A senha é armazenada em senha_hash e nunca é retornada pela API.
+            - Usuários cadastrados antes desta etapa, sem senha, não conseguem autenticar.
+
+        - Testes realizados:
+            - php -l nos arquivos PHP criados e alterados: sem erros de sintaxe.
+            - php artisan test: 22 testes e 100 asserções, todos aprovados.
+            - Login válido, senha incorreta, logout sem token, logout com token e rota protegida sem token cobertos por testes.
+
+        - Uso de inteligência artificial:
+            Foi utilizada a ferramenta Codex como apoio na instalação e configuração do Sanctum, na criação das rotas de autenticação, na proteção das rotas e na atualização dos testes e da documentação. Todo o conteúdo foi revisado, aplicado e testado pelo desenvolvedor.

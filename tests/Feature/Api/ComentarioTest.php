@@ -5,11 +5,19 @@ namespace Tests\Feature\Api;
 use App\Models\Chamado;
 use App\Models\Usuario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ComentarioTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Sanctum::actingAs(Usuario::factory()->create());
+    }
 
     public function test_cria_comentario_valido(): void
     {

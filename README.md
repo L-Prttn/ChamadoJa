@@ -9,6 +9,7 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
 
 2. Funcionalidades
     - Cadastro e gerenciamento de usuários
+    - Autenticação com token de acesso (Laravel Sanctum)
     - Criação e gerenciamento de chamados
     - Alteração de status dos chamados
     - Comentários nos chamados
@@ -20,6 +21,7 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
     - Backend: PHP com Laravel
     - Banco de dados: PostgreSQL
     - API REST
+    - Autenticação: Laravel Sanctum
     - Git/GitHub
 
 4. Documentação
@@ -38,8 +40,9 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
         Semana 5 concluída: comentários, histórico de status, regras de
         transição, filtros, paginação e resumo implementados.
         Semana 6: pesquisa sobre autenticação e segurança registrada,
-        testes automatizados e respostas de erro padronizadas.
-        O Laravel Sanctum não foi implementado; permanece como extensão opcional.
+        testes automatizados, respostas de erro padronizadas e autenticação
+        com Laravel Sanctum implementada como extensão opcional.
+        As rotas de recursos exigem token, exceto saúde, login e cadastro de usuário.
 
 6. Instalação
     - Requisitos
@@ -97,6 +100,8 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
         {
             "nome": "Usuario Exemplo",
             "email": "usuario@example.test",
+            "senha": "senha-teste",
+            "senha_confirmation": "senha-teste",
             "tipo": "usuario"
         }
         Resposta 201:
@@ -110,6 +115,7 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
                 "atualizado_em": "..."
             }
         }
+
     - Exemplo de abertura de chamado:
         POST /api/chamados
         {
@@ -229,3 +235,43 @@ API de gerenciamento de chamados desenvolvido como projeto acadêmico.
                 ]
             }
         }
+
+9. Autenticação
+    - Cadastro de usuário (público):
+        POST /api/usuarios
+        {
+            "nome": "Usuario Exemplo",
+            "email": "usuario@example.test",
+            "senha": "senha-teste",
+            "senha_confirmation": "senha-teste",
+            "tipo": "usuario"
+        }
+    - Login (público):
+        POST /api/login
+        {
+            "email": "usuario@example.test",
+            "senha": "senha-teste"
+        }
+        Resposta 200:
+        {
+            "dados": {
+                "token": "1|token-gerado",
+                "usuario": {
+                    "id": 6,
+                    "nome": "Usuario Exemplo",
+                    "email": "usuario@example.test",
+                    "tipo": "usuario"
+                }
+            }
+        }
+    - Uso do token:
+        Enviar o header Authorization: Bearer <token> nas rotas protegidas.
+    - Logout:
+        POST /api/logout
+        Revoga o token atual.
+    - Rotas públicas:
+        GET /api/saude
+        POST /api/login
+        POST /api/usuarios
+    - As demais rotas exigem autenticação.
+    - Usuários cadastrados antes desta etapa, sem senha, não conseguem autenticar.
